@@ -56,10 +56,11 @@ public class SharePointFileFormatter extends DataListColumnFormatDefault {
 
             for (String v : values) {
                 if (v != null && !v.isEmpty() && v.indexOf('|') != -1) {
-                    String[] verticalBarSplit = v.split("\\|");
+                    String[] verticalBarSplit = v.split("\\|"); // filename.pdf|documentID -> ["filenameName.pdf", "documentId"]
                     if (verticalBarSplit.length > 0) {
                         String filename = verticalBarSplit[0];
                         String documentId = verticalBarSplit[1];
+                        jsonParams.put("fileName", filename);
                         String params = StringUtil.escapeString(SecurityUtil.encrypt(jsonParams.toString()), StringUtil.TYPE_URL, null);
 
                         if ("true".equalsIgnoreCase(enableDownload)) {
@@ -86,22 +87,22 @@ public class SharePointFileFormatter extends DataListColumnFormatDefault {
 
     @Override
     public String getName() {
-        return "Mayan DMS File Formatter";
+        return "Sharepoint File Formatter";
     }
 
     @Override
     public String getVersion() {
-        return Activator.VERSION;
+        return "8.0";
     }
 
     @Override
     public String getDescription() {
-        return "Format filename and download file from Mayan EDMS inside the datalist";
+        return "Format filename and download file from Sharepoint inside the datalist";
     }
 
     @Override
     public String getLabel() {
-        return "Mayan DMS File Formatter";
+        return "Sharepoint  File Formatter";
     }
 
     @Override
@@ -111,7 +112,7 @@ public class SharePointFileFormatter extends DataListColumnFormatDefault {
 
     @Override
     public String getPropertyOptions() {
-        return AppUtil.readPluginResource(getClassName(), "/properties/mayanFileDownloadFormatter.json", null, true, MESSAGE_PATH);
+        return AppUtil.readPluginResource(getClassName(), "/properties/SharePointFileDownloadFormatter.json", null, true, MESSAGE_PATH);
     }
 
 }
