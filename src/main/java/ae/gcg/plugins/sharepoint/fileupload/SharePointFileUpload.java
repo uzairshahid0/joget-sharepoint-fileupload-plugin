@@ -12,6 +12,7 @@ import org.joget.apps.userview.model.PwaOfflineResources;
 import org.joget.commons.util.*;
 import org.joget.plugin.base.PluginWebSupport;
 import org.joget.workflow.util.WorkflowUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -217,8 +218,9 @@ public class SharePointFileUpload extends Element implements FormBuilderPaletteE
         String tenantId = getPropertyString("tenantId");
         String siteName = getPropertyString("siteName");
         String folderName = getPropertyString("folderName");
-        String MOMFieldId = getPropertyString("MOMId");
-        String MOMId = formData.getRequestParameter(MOMFieldId);
+
+        JSONArray SPColumnJsonArray=  new JSONArray(getProperty("sharePointMetaData"));
+
 
         Set<String> remove = new HashSet<>();
         Set<String> existing = new HashSet<>();
@@ -250,7 +252,7 @@ public class SharePointFileUpload extends Element implements FormBuilderPaletteE
                         // upload file to SharePoint
                         String documentId = "";
                         try {
-                            documentId = new SharepointAPIHelper().uploadFileToSharePoint(applicationId, tenantName, clientId, clientSecret, refreshToken, tenantId, siteName, folderName, file.getName(), file, MOMId);
+                            documentId = new SharepointAPIHelper().uploadFileToSharePoint(applicationId, tenantName, clientId, clientSecret, refreshToken, tenantId, siteName, folderName, file.getName(), file, SPColumnJsonArray);
                         } catch (IOException e) {
                             // Convert stack trace to a single string
                             StringWriter sw = new StringWriter();

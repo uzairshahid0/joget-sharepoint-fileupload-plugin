@@ -6,6 +6,7 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.joget.commons.util.LogUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.regex.Pattern;
 public class SharepointAPIHelper {
     private final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-    public String uploadFileToSharePoint(String applicationId, String tenantName, String clientId, String clientSecret, String refreshToken, String tenantId, String siteName, String folderName, String fileName, File file, String MOMId) throws IOException {
+    public String uploadFileToSharePoint(String applicationId, String tenantName, String clientId, String clientSecret, String refreshToken, String tenantId, String siteName, String folderName, String fileName, File file, JSONArray columnData) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
         // Prepare the request body with the binary file content
@@ -62,7 +63,7 @@ public class SharepointAPIHelper {
 
 
             // Update MOM-ID column for the File
-            updateListItemColumn(tenantName, siteName, listItemId, MOMId, accessToken); // API CALL 3: Execute Update Column API
+            updateListItemColumn(tenantName, siteName, listItemId, columnData, accessToken); // API CALL 3: Execute Update Column API
 
 
             return uniqueId;
@@ -94,7 +95,7 @@ public class SharepointAPIHelper {
 
 
     // Method to update the MOM-ID column
-    private void updateListItemColumn(String tenantName, String siteName, String listItemId, String momId, String accessToken) throws IOException {
+    private void updateListItemColumn(String tenantName, String siteName, String listItemId, JSONArray columnData, String accessToken) throws IOException {
         String url = "https://" + tenantName + ".sharepoint.com/sites/" + siteName + "/_api/" + listItemId;
 
         OkHttpClient client = new OkHttpClient();
@@ -102,8 +103,16 @@ public class SharepointAPIHelper {
         MediaType JSON = MediaType.parse("application/json;odata=verbose; charset=utf-8");
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("__metadata", new JSONObject().put("type", "SP.Data.Shared_x0020_DocumentsItem"));
-        jsonObject.put("MOM_x002d_ID", momId);
-        LogUtil.info("Setting MOM-ID: ", jsonObject.toString());
+        LogUtil.info("Received Column DAta:", columnData.toString());
+        for (int i = 0; i < columnData.length(); i++)
+        {
+            JSONObject col = columnData.getJSONObject(i);
+            String key = col.getString("sharepointColumnId");
+            String value = col.getString(  "sharePointColumnValue" );
+            jsonObject.put(key, value);
+        }
+        LogUtil.info("Setting Meta Data: ", jsonObject.toString());
+
 
         RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
 
@@ -255,12 +264,12 @@ public class SharepointAPIHelper {
 
         // Execute the request and handle the response
         Response response = client.newCall(request).execute();
-            if (!response.isSuccessful()) {
-                LogUtil.info("Download Response: ", response.body().toString());
-                throw new IOException("Unexpected code " + response);
-            }
+        if (!response.isSuccessful()) {
+            LogUtil.info("Download Response: ", response.body().toString());
+            throw new IOException("Unexpected code " + response);
+        }
 
-            return response;
+        return response;
 
     }
 

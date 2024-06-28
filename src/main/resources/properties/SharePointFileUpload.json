@@ -227,17 +227,18 @@
         "required": "True"
       },
       {
-        "name" : "formDefId",
-        "label" : "@@ae.gcg.plugins.sharepoint.fileupload.form@@",
-        "type" : "selectbox",
-        "options_ajax": "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/forms/options"
+        "label" : "@@ae.gcg.plugins.sharepoint.fileupload.listItems@@",
+        "type" : "header",
+        "description": "@@ae.gcg.plugins.sharepoint.fileupload.listItemsDesc@@"
       },
       {
-        "name" : "MOMId",
-        "label" : "@@ae.gcg.plugins.doxis.fileupload.meetingID@@",
-        "type" : "selectbox",
-        "options_ajax_on_change" : "formDefId",
-        "options_ajax" : "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/form/columns/options"
+        "name": "sharePointMetaData",
+        "label": "@@ae.gcg.plugins.sharepoint.fileupload.labelID1@@",
+        "type": "grid",
+        "columns" : [
+          {"key" : 'sharepointColumnId', "label" : 'Sharepoint Label ID', "required": 'true'},
+          {"key" : 'sharePointColumnValue', "label" : 'Sharepoint Column Value', "required": 'true'}
+        ]
       }
     ]
   }
