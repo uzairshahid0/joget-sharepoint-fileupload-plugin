@@ -217,8 +217,18 @@ public class SharePointFileUpload extends Element implements FormBuilderPaletteE
         String tenantId = getPropertyString("tenantId");
         String siteName = getPropertyString("siteName");
         String folderName = getPropertyString("folderName");
-        String MOMFieldId = getPropertyString("MOMId");
-        String MOMId = formData.getRequestParameter(MOMFieldId);
+
+        String metaLabel1 = getPropertyString("metaLabel1");
+        String metaData1Id = getPropertyString("metaData1");
+        String metaData1 = formData.getRequestParameter(metaData1Id);
+
+        String metaLabel2 = getPropertyString("metaLabel2");
+        String metaData2Id = getPropertyString("metaData2");
+        String metaData2 = formData.getRequestParameter(metaData2Id);
+
+        String metaLabel3 = getPropertyString("metaLabel3");
+        String metaData3Id = getPropertyString("metaData3");
+        String metaData3 = formData.getRequestParameter(metaData3Id);
 
         Set<String> remove = new HashSet<>();
         Set<String> existing = new HashSet<>();
@@ -250,7 +260,7 @@ public class SharePointFileUpload extends Element implements FormBuilderPaletteE
                         // upload file to SharePoint
                         String documentId = "";
                         try {
-                            documentId = new SharepointAPIHelper().uploadFileToSharePoint(applicationId, tenantName, clientId, clientSecret, refreshToken, tenantId, siteName, folderName, file.getName(), file, MOMId);
+                            documentId = new SharepointAPIHelper().uploadFileToSharePoint(applicationId, tenantName, clientId, clientSecret, refreshToken, tenantId, siteName, folderName, file.getName(), file, metaLabel1 , metaData1,metaLabel2 , metaData2,metaLabel3 , metaData3);
                         } catch (IOException e) {
                             // Convert stack trace to a single string
                             StringWriter sw = new StringWriter();

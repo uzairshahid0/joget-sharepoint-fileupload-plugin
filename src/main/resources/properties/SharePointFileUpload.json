@@ -227,17 +227,51 @@
         "required": "True"
       },
       {
+        "label" : "@@ae.gcg.plugins.sharepoint.fileupload.listItems@@",
+        "type" : "header",
+        "description": "@@ae.gcg.plugins.sharepoint.fileupload.listItemsDesc@@"
+      },
+      {
         "name" : "formDefId",
         "label" : "@@ae.gcg.plugins.sharepoint.fileupload.form@@",
         "type" : "selectbox",
         "options_ajax": "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/forms/options"
       },
       {
-        "name" : "MOMId",
-        "label" : "@@ae.gcg.plugins.doxis.fileupload.meetingID@@",
+        "name" : "metaData1",
+        "label" : "@@ae.gcg.plugins.doxis.fileupload.metaData1@@",
         "type" : "selectbox",
         "options_ajax_on_change" : "formDefId",
         "options_ajax" : "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/form/columns/options"
+      },
+      {
+        "name": "metaLabel1",
+        "label": "@@ae.gcg.plugins.sharepoint.fileupload.metaLabel1@@",
+        "type": "textfield"
+      },
+      {
+        "name" : "metaData2",
+        "label" : "@@ae.gcg.plugins.doxis.fileupload.metaData2@@",
+        "type" : "selectbox",
+        "options_ajax_on_change" : "formDefId",
+        "options_ajax" : "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/form/columns/options"
+      },
+      {
+        "name": "metaLabel2",
+        "label": "@@ae.gcg.plugins.sharepoint.fileupload.metaLabel2@@",
+        "type": "textfield"
+      },
+      {
+        "name" : "metaData3",
+        "label" : "@@ae.gcg.plugins.doxis.fileupload.metaData3@@",
+        "type" : "selectbox",
+        "options_ajax_on_change" : "formDefId",
+        "options_ajax" : "[CONTEXT_PATH]/web/json/console/app[APP_PATH]/form/columns/options"
+      },
+      {
+        "name": "metaLabel3",
+        "label": "@@ae.gcg.plugins.sharepoint.fileupload.metaLabel3@@",
+        "type": "textfield"
       }
     ]
   }
